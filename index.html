@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skix Games</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+.container{max-width:960px;margin:0 auto;padding:2rem 1rem}
+header{text-align:center;padding:3rem 0 2rem}
+header h1{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+header p{color:#94a3b8;margin-top:.5rem;font-size:1.1rem}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:2rem}
+.card{background:#1e293b;border-radius:1rem;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer;text-decoration:none;color:inherit;border:1px solid #334155}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.4);border-color:#818cf8}
+.card-thumb{height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,#1e3a5f,#0f172a)}
+.card-body{padding:1.25rem}
+.card-body h2{font-size:1.25rem;font-weight:700;margin-bottom:.5rem}
+.card-body p{color:#94a3b8;font-size:.9rem;line-height:1.5}
+.badge{display:inline-block;background:#818cf8;color:#fff;font-size:.7rem;padding:.2rem .6rem;border-radius:9999px;margin-top:.75rem;font-weight:600}
+footer{text-align:center;padding:3rem 0 1rem;color:#475569;font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎮 Skix Games</h1>
+    <p>ブラウザで遊べるゲームコレクション</p>
+  </header>
+  <div class="games">
+    <a class="card" href="math-rain/">
+      <div class="card-thumb">🌧️</div>
+      <div class="card-body">
+        <h2>Math Rain</h2>
+        <p>空から降ってくる計算問題を素早く解こう！スピードと正確さが試される算数ゲーム。</p>
+        <span class="badge">PLAY NOW</span>
+      </div>
+    </a>
+  </div>
+  <footer>&copy; 2026 Skix Inc.</footer>
+</div>
+</body>
+</html>
