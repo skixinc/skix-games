@@ -75,7 +75,6 @@ export default function Stage2() {
     setTimeout(() => {
       if (question + 1 >= TOTAL_QUESTIONS) {
         setGameOver(true)
-        if (allCorrect) setScore((s) => s) // already counted
       } else {
         setQuestion((q) => q + 1)
         setAnswers({})
@@ -136,6 +135,7 @@ export default function Stage2() {
             <div className="text-sm font-bold mb-1">{src + 1} →</div>
             <select value={answers[src] ?? -1} onChange={(e) => handleAnswer(src, parseInt(e.target.value))}
               disabled={submitted}
+              aria-label={`ケーブル ${src + 1} の接続先`}
               className="w-full bg-gray-800 border border-gray-600 rounded px-1 py-1 text-sm text-center">
               <option value={-1}>?</option>
               {Array.from({ length: cableCount }, (_, t) => (

@@ -70,9 +70,9 @@ function ShapeSVG({ shape, mirror }: { shape: Shape; mirror: boolean }) {
   }
 }
 
-function PatternView({ shapes, mirror, size }: { shapes: Shape[]; mirror: boolean; size: number }) {
+function PatternView({ shapes, mirror, size, label }: { shapes: Shape[]; mirror: boolean; size: number; label: string }) {
   return (
-    <svg viewBox="0 0 100 100" width={size} height={size} className="bg-gray-800 rounded-xl border-2 border-gray-700">
+    <svg viewBox="0 0 100 100" width={size} height={size} role="img" aria-label={label} className="bg-gray-800 rounded-xl border-2 border-gray-700">
       {shapes.map((s, i) => <ShapeSVG key={i} shape={s} mirror={mirror} />)}
     </svg>
   )
@@ -109,7 +109,7 @@ export default function Stage1() {
     }
     const id = setTimeout(() => setTimeLeft((t) => t - 1), 1000)
     return () => clearTimeout(id)
-  }, [timeLeft, gameOver, feedback])
+  }, [timeLeft, gameOver, feedback, advance])
 
   const advance = useCallback((correct: boolean) => {
     if (correct) setScore((s) => s + 1)
@@ -153,18 +153,20 @@ export default function Stage1() {
       </div>
       <div className="mb-4">
         <p className="text-center text-sm text-gray-400 mb-2">ターゲット{target.mirrored ? '（鏡像）' : ''}</p>
-        <PatternView shapes={target.shapes} mirror={target.mirrored} size={160} />
+        <PatternView shapes={target.shapes} mirror={target.mirrored} size={160} label="ターゲットパターン" />
       </div>
       <p className="text-sm text-gray-400 mb-2">同じパターンを選んでください</p>
       <div className="grid grid-cols-3 gap-3 max-w-lg">
         {choices.map((c, i) => (
           <button key={i} onClick={() => handleSelect(i)}
+            aria-label={`選択肢 ${i + 1}`}
+            aria-pressed={selected === i}
             className={`rounded-xl border-2 transition ${
               selected === i ? (feedback === 'correct' ? 'border-green-400 bg-green-900/30' : 'border-red-400 bg-red-900/30')
               : i === correctIdx && feedback === 'wrong' ? 'border-green-400/50'
               : 'border-gray-700 hover:border-gray-500'
             }`}>
-            <PatternView shapes={c.shapes} mirror={false} size={120} />
+            <PatternView shapes={c.shapes} mirror={false} size={120} label={`選択肢 ${i + 1} のパターン`} />
           </button>
         ))}
       </div>
