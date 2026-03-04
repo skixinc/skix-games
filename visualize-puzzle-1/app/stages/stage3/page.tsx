@@ -1,5 +1,5 @@
 'use client'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import BackButton from '../../../components/BackButton'
 
 const TOTAL_QUESTIONS = 5
@@ -64,23 +64,7 @@ export default function Stage3() {
     return generateGrid(rand, Math.min(gridSize, 6))
   }, [question, gridSize])
 
-  // Timer
-  useState(() => {
-    if (typeof window === 'undefined') return
-    const id = setInterval(() => {
-      setTimeLeft((t) => {
-        if (t <= 1) {
-          setFeedback('wrong')
-          setTimeout(() => advance(false), 1000)
-          return 0
-        }
-        return t - 1
-      })
-    }, 1000)
-    return () => clearInterval(id)
-  })
-
-  const advance = (correct: boolean) => {
+  const advance = useCallback((correct: boolean) => {
     if (correct) setScore((s) => s + 1)
     if (question + 1 >= TOTAL_QUESTIONS) {
       setGameOver(true)
@@ -90,7 +74,19 @@ export default function Stage3() {
       setFeedback(null)
       setTimeLeft(TIME_LIMIT)
     }
-  }
+  }, [question])
+
+  // Timer — mirrors the correct pattern from Stage 1
+  useEffect(() => {
+    if (gameOver || feedback) return
+    if (timeLeft <= 0) {
+      setFeedback('wrong')
+      setTimeout(() => advance(false), 1000)
+      return
+    }
+    const id = setTimeout(() => setTimeLeft((t) => t - 1), 1000)
+    return () => clearTimeout(id)
+  }, [timeLeft, gameOver, feedback, advance])
 
   const handleClick = (idx: number) => {
     if (feedback || gameOver) return
@@ -140,6 +136,8 @@ export default function Stage3() {
             const isWrong = feedback && idx === data.wrongIdx
             return (
               <button key={c} onClick={() => handleClick(idx)}
+                aria-label={`行${r + 1}列${c + 1}: ${cell[0]}${cell[1]}`}
+                aria-pressed={isSelected}
                 className={`w-12 h-12 md:w-14 md:h-14 rounded-lg border-2 flex items-center justify-center text-lg transition ${
                   isWrong ? 'border-green-400 bg-green-900/40' :
                   isSelected && feedback === 'wrong' ? 'border-red-400 bg-red-900/40' :

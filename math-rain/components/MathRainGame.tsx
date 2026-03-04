@@ -176,7 +176,7 @@ export default function MathRainGame() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-6 p-4">
         <div className="text-center">
-          <h1 className="text-6xl md:text-8xl font-bold text-white drop-shadow-lg mb-2">🌧️</h1>
+          <div className="text-6xl md:text-8xl mb-2" aria-hidden="true">🌧️</div>
           <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">Math Rain</h1>
           <p className="text-xl md:text-2xl text-white/80 mt-2">計算の雨</p>
         </div>
@@ -285,11 +285,13 @@ export default function MathRainGame() {
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="答えを入力..."
+          aria-label="計算の答えを入力"
           className="flex-1 px-4 py-3 rounded-xl text-lg md:text-xl font-bold text-center bg-white/90 outline-none focus:ring-2 focus:ring-sky-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           autoFocus
         />
         <button
           type="submit"
+          aria-label="答えを送信"
           className="px-6 py-3 bg-sky-500 text-white font-bold text-lg rounded-xl hover:bg-sky-600 active:scale-95 transition-transform"
         >
           ✓

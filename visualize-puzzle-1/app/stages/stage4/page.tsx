@@ -231,6 +231,8 @@ export default function Stage4() {
             const isEnd = r === mazeSize - 1 && c === mazeSize - 1
             return (
               <button key={key} onClick={() => handleCellClick(r, c)}
+                aria-label={`行${r + 1}列${c + 1}${cell.wall ? ' 壁' : isStart ? ' スタート' : isEnd ? ' ゴール' : cell.blue ? ' 青ドット' : cell.red ? ' 赤ドット' : ''}`}
+                aria-disabled={cell.wall || (phase === 'forward' && cell.red) || (phase === 'backward' && cell.blue)}
                 style={{ width: cellSize, height: cellSize }}
                 className={`text-xs flex items-center justify-center rounded-sm transition-all ${
                   cell.wall ? 'bg-gray-800' :
